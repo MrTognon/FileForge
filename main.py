@@ -1,14 +1,15 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow
-import sys
+from PyQt5 import QtWidgets
+from ui.mainwindow import Ui_Form  # Assurez-vous que le chemin d'importation est correct
 
-class MainWindow(QMainWindow):
+class MainWindow(QtWidgets.QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Mon Application PyQt")
-        self.setGeometry(100, 100, 600, 400)  # x, y, largeur, hauteur
+        self.setupUi(self)  # Configure l'interface utilisateur
+        # Ajoutez ici la logique supplémentaire de votre application
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
     mainWin = MainWindow()
     mainWin.show()
     sys.exit(app.exec_())
