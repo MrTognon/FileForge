@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
-from ui.mainwindow import Ui_Form  # Assurez-vous que le chemin d'importation est correct
+from ui.mainwindow import Ui_MainWindow  # Assurez-vous que le chemin d'importation est correct
 
-class MainWindow(QtWidgets.QWidget, Ui_Form):
+class MainWindow(QtWidgets.QWidget, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)  # Configure l'interface utilisateur

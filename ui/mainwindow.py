@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file 'ui/mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -11,55 +11,81 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(706, 461)
-        Form.setMinimumSize(QtCore.QSize(706, 461))
-        Form.setMaximumSize(QtCore.QSize(706, 461))
-        self.label_copyright = QtWidgets.QLabel(Form)
-        self.label_copyright.setGeometry(QtCore.QRect(640, 440, 61, 20))
-        self.label_copyright.setObjectName("label_copyright")
-        self.widget = QtWidgets.QWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(110, 90, 493, 271))
-        self.widget.setObjectName("widget")
-        self.gridLayout = QtWidgets.QGridLayout(self.widget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(600, 600)
+        MainWindow.setMinimumSize(QtCore.QSize(600, 600))
+        MainWindow.setAutoFillBackground(False)
+        MainWindow.setStyleSheet("background-color: rgb(240, 240, 240);")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(MainWindow)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.gridLayout.setObjectName("gridLayout")
-        self.list_files = QtWidgets.QListWidget(self.widget)
-        self.list_files.setObjectName("list_files")
-        self.gridLayout.addWidget(self.list_files, 2, 0, 1, 2)
-        self.btn_cancel = QtWidgets.QPushButton(self.widget)
-        self.btn_cancel.setObjectName("btn_cancel")
-        self.gridLayout.addWidget(self.btn_cancel, 3, 0, 1, 1)
-        self.btn_rename = QtWidgets.QPushButton(self.widget)
-        self.btn_rename.setObjectName("btn_rename")
-        self.gridLayout.addWidget(self.btn_rename, 3, 1, 1, 1)
-        self.btn_choose = QtWidgets.QPushButton(self.widget)
+        self.btn_choose = QtWidgets.QPushButton(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.btn_choose.setFont(font)
+        self.btn_choose.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btn_choose.setStyleSheet("")
         self.btn_choose.setObjectName("btn_choose")
         self.gridLayout.addWidget(self.btn_choose, 1, 0, 1, 2)
-        self.label_infos = QtWidgets.QLabel(self.widget)
+        self.btn_rename = QtWidgets.QPushButton(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.btn_rename.setFont(font)
+        self.btn_rename.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btn_rename.setObjectName("btn_rename")
+        self.gridLayout.addWidget(self.btn_rename, 3, 1, 1, 1)
+        self.label_infos = QtWidgets.QLabel(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.label_infos.setFont(font)
+        self.label_infos.setAlignment(QtCore.Qt.AlignCenter)
         self.label_infos.setObjectName("label_infos")
         self.gridLayout.addWidget(self.label_infos, 0, 0, 1, 2)
+        self.list_files = QtWidgets.QListWidget(MainWindow)
+        self.list_files.setObjectName("list_files")
+        self.gridLayout.addWidget(self.list_files, 2, 0, 1, 2)
+        self.btn_cancel = QtWidgets.QPushButton(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.btn_cancel.setFont(font)
+        self.btn_cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btn_cancel.setMouseTracking(False)
+        self.btn_cancel.setObjectName("btn_cancel")
+        self.gridLayout.addWidget(self.btn_cancel, 3, 0, 1, 1)
+        self.label_copyright = QtWidgets.QLabel(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_copyright.setFont(font)
+        self.label_copyright.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label_copyright.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_copyright.setObjectName("label_copyright")
+        self.gridLayout.addWidget(self.label_copyright, 4, 1, 1, 1)
+        self.horizontalLayout.addLayout(self.gridLayout)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label_copyright.setText(_translate("Form", "Thomas Lys"))
-        self.btn_cancel.setText(_translate("Form", "Annuler"))
-        self.btn_rename.setText(_translate("Form", "Renommer les fichiers"))
-        self.btn_choose.setText(_translate("Form", "Choisir des fichiers"))
-        self.label_infos.setText(_translate("Form", "Format de fichier accepté : BATmode220__2023-11-27_02-42-31_0001954.wav"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "FileForge"))
+        self.btn_choose.setText(_translate("MainWindow", "Choisir des fichiers"))
+        self.btn_rename.setText(_translate("MainWindow", "Renommer les fichiers"))
+        self.label_infos.setText(_translate("MainWindow", "Format de fichier accepté : BATmode220__2023-11-27_02-42-31_0001954.wav"))
+        self.btn_cancel.setText(_translate("MainWindow", "Annuler"))
+        self.label_copyright.setText(_translate("MainWindow", "Programme développé par Thomas Lys"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
+    MainWindow = QtWidgets.QWidget()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
     sys.exit(app.exec_())
