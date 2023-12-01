@@ -9,10 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import os
-import shutil
-import re
-
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import QIcon
+import os, shutil, re
 
 
 class Ui_MainWindow(object):
@@ -136,9 +135,11 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QWidget()
+    app = QApplication(sys.argv)
+    
+    MainWindow = QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+
     MainWindow.show()
     sys.exit(app.exec_())
