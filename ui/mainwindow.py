@@ -10,10 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QIcon
 import os, shutil, re
 
-
+#* Classe de l'interface générée par Qt Designer
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -33,7 +32,7 @@ class Ui_MainWindow(object):
         self.btn_choose.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btn_choose.setStyleSheet("")
         self.btn_choose.setObjectName("btn_choose")
-        self.btn_choose.clicked.connect(self.choose_files) # Connecte le bouton à la fonction choose_files
+        self.btn_choose.clicked.connect(self.choose_files) #* Connecte le bouton à la fonction choose_files
         self.gridLayout.addWidget(self.btn_choose, 1, 0, 1, 2)
         self.btn_rename = QtWidgets.QPushButton(MainWindow)
         font = QtGui.QFont()
@@ -41,7 +40,7 @@ class Ui_MainWindow(object):
         self.btn_rename.setFont(font)
         self.btn_rename.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btn_rename.setObjectName("btn_rename")
-        self.btn_rename.clicked.connect(self.rename_files)
+        self.btn_rename.clicked.connect(self.rename_files)  #* Connecte le bouton à la fonction rename_files
         self.gridLayout.addWidget(self.btn_rename, 3, 1, 1, 1)
         self.label_infos = QtWidgets.QLabel(MainWindow)
         font = QtGui.QFont()
@@ -60,7 +59,7 @@ class Ui_MainWindow(object):
         self.btn_cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btn_cancel.setMouseTracking(False)
         self.btn_cancel.setObjectName("btn_cancel")
-        self.btn_cancel.clicked.connect(self.cancel)
+        self.btn_cancel.clicked.connect(self.cancel)  #* Connecte le bouton à la fonction cancel
         self.gridLayout.addWidget(self.btn_cancel, 3, 0, 1, 1)
         self.label_copyright = QtWidgets.QLabel(MainWindow)
         font = QtGui.QFont()
@@ -86,53 +85,65 @@ class Ui_MainWindow(object):
         self.btn_cancel.setText(_translate("MainWindow", "Annuler"))
         self.label_copyright.setText(_translate("MainWindow", "Programme développé par Thomas Lys"))
 
+    #* Signaux et slots
     @QtCore.pyqtSlot()
-    def choose_files(self):
-        """Ouvre une boîte de dialogue pour sélectionner des fichiers à renommer"""
+    def choose_files(self): #* Slot du bouton btn_choose qui ouvre une boîte de dialogue pour sélectionner des fichiers à renommer
         self.list_files.clear()
         self.files = QtWidgets.QFileDialog.getOpenFileNames(self, "Choisir des fichiers", os.path.expanduser('~/Documents'), "Fichiers audio (*.wav)")[0]
-        
+
+        #* Expression régulière pour vérifier le format des fichiers
         pattern = r'BATmode\d+__\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}_\d{7}'
-        for file in self.files:
-            if re.match(pattern, os.path.basename(file)):
-                self.list_files.addItem(file)
+        
+        #* Parcours les fichiers sélectionnés
+        for file in self.files: 
+            if re.match(pattern, os.path.basename(file)): #* Vérifie le format du fichier
+                self.list_files.addItem(file) #* Ajoute les fichiers sélectionnés à la liste
 
     @QtCore.pyqtSlot()
-    def rename_files(self):
-        """Ouvre une boîte de dialogue pour sélectionner le dossier ou copier les fichiers renommés si des fichiers ont été sélectionnés"""
+    def rename_files(self): #* Slot du bouton btn_rename qui renomme les fichiers sélectionnés
+        #* Vérifie si des fichiers ont été sélectionnés
         if self.list_files.count() == 0:
-            return
+            return #* Si aucun fichier n'a été sélectionné, la fonction s'arrête
+        
+        #* Ouvre une boîte de dialogue pour choisir un dossier de destination
         self.folder = QtWidgets.QFileDialog.getExistingDirectory(self, "Choisir un dossier", os.path.expanduser('~/Documents'))
         
-        """Renomme les fichiers sélectionnés"""
+        #* Parcours les fichiers sélectionnés
         for file in self.files:
-            file_name = os.path.basename(file)
-            file_prefixe = file_name.split('__')[0]
-            file_suffixe = file_name.split('__')[1]
-            file_date = file_suffixe.split('_')[0]
-            file_time = file_suffixe.split('_')[1]
+            #* Récupère les informations du fichier
+            file_name = os.path.basename(file) #* Nom du fichier
+            file_prefixe = file_name.split('__')[0] #* Préfixe du fichier
+            file_suffixe = file_name.split('__')[1] #* Suffixe du fichier
+            file_date = file_suffixe.split('_')[0] #* Date du fichier
+            file_time = file_suffixe.split('_')[1] #* Heure du fichier
 
+            #* Récupère le numéro de fichier et le formate
             number = "00" + file_prefixe.split('BATmode')[1]
 
+            #* Récupère la date du fichier
             year = file_date.split('-')[0]
             month = file_date.split('-')[1]
             day = file_date.split('-')[2]
 
+            #* Récupère l'heure du fichier
             hour = file_time.split('-')[0]
             minute = file_time.split('-')[1]
             second = file_time.split('-')[2]
 
+            #* Crée le nouveau nom de fichier
             new_file_name = 'S4U' + number + '_' + year + month + day + '_' + hour + minute + second + '.wav'
+            
+            #* Copie le fichier dans le dossier de destination
             new_file_path = os.path.join(self.folder, new_file_name)
             shutil.copy(file, new_file_path)
-        
-        self.list_files.clear()
+        self.list_files.clear() #* Vide la liste des fichiers sélectionnés
 
     @QtCore.pyqtSlot()
-    def cancel(self):
-        """Annule la sélection de fichiers"""
+    def cancel(self): #* Slot du bouton btn_cancel qui annule la sélection de fichiers
+        #* Vide la liste des fichiers sélectionnés
         self.list_files.clear()
 
+#* Classe de la fenêtre principale
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

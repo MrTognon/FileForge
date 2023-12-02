@@ -1,0 +1,11 @@
+# Liste des imports
+# Imports dans main.py
+from PyQt5 import QtWidgets
+from PyQt5.QtGui import QIcon
+from ui.mainwindow import Ui_MainWindow
+import os, sys
+
+# Imports dans ui.mainwindow.py
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+import os, shutil, re
