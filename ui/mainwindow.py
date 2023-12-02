@@ -12,6 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import os, shutil, re
 
+#* Expressions régulières pour vérifier le format des fichiers
+pattern1 = r'BATmode\d+_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}_\d{7}'
+pattern2 = r'BATmode\d+__\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}_\d{7}'
+        
+
 #* Classe de l'interface générée par Qt Designer
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -91,12 +96,9 @@ class Ui_MainWindow(object):
         self.list_files.clear()
         self.files = QtWidgets.QFileDialog.getOpenFileNames(self, "Choisir des fichiers", os.path.expanduser('~/Documents'), "Fichiers audio (*.wav)")[0]
 
-        #* Expression régulière pour vérifier le format des fichiers
-        pattern = r'BATmode\d+__\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}_\d{7}'
-        
         #* Parcours les fichiers sélectionnés
         for file in self.files: 
-            if re.match(pattern, os.path.basename(file)): #* Vérifie le format du fichier
+            if re.match(pattern1, os.path.basename(file)) or re.match(pattern2, os.path.basename(file)): #* Vérifie le format du fichier
                 self.list_files.addItem(file) #* Ajoute les fichiers sélectionnés à la liste
 
     @QtCore.pyqtSlot()
@@ -110,12 +112,19 @@ class Ui_MainWindow(object):
         
         #* Parcours les fichiers sélectionnés
         for file in self.files:
-            #* Récupère les informations du fichier
-            file_name = os.path.basename(file) #* Nom du fichier
-            file_prefixe = file_name.split('__')[0] #* Préfixe du fichier
-            file_suffixe = file_name.split('__')[1] #* Suffixe du fichier
-            file_date = file_suffixe.split('_')[0] #* Date du fichier
-            file_time = file_suffixe.split('_')[1] #* Heure du fichier
+            if re.match(pattern2, os.path.basename(file)):
+                #* Récupère les informations du fichier
+                file_name = os.path.basename(file) #* Nom du fichier
+                file_prefixe = file_name.split('__')[0] #* Préfixe du fichier
+                file_suffixe = file_name.split('__')[1] #* Suffixe du fichier
+                file_date = file_suffixe.split('_')[0] #* Date du fichier
+                file_time = file_suffixe.split('_')[1] #* Heure du fichier
+            else:
+                #* Récupère les informations du fichier
+                file_name = os.path.basename(file)
+                file_prefixe = file_name.split('_')[0]
+                file_date = file_name.split('_')[1]
+                file_time = file_name.split('_')[2]
 
             #* Récupère le numéro de fichier et le formate
             number = "00" + file_prefixe.split('BATmode')[1]
